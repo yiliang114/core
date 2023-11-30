@@ -34,19 +34,22 @@ jobs:
           flag: ${{ secrets.BOT_FLAG }}
 
       # Checkout to specific branch
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.ref }}
           token: ${{ env.GITHUB_TOKEN }}
-
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
       - name: Get yarn cache directory path
         id: yarn_cache_dir_path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
       - uses: actions/cache@v3
         id: yarn_cache
         with:
