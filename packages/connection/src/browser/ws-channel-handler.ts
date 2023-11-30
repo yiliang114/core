@@ -19,6 +19,7 @@ export class WSChannelHandler {
   constructor(public wsPath: UrlProvider, logger: any, public protocols?: string[], clientId?: string) {
     this.logger = logger || this.logger;
     this.clientId = clientId || `CLIENT_ID_${uuid()}`;
+    // WS 的自动重连
     this.connection = new ReconnectingWebSocket(wsPath, protocols, {}) as WebSocket; // new WebSocket(wsPath, protocols);
   }
   // 为解决建立连接之后，替换成可落盘的 logger

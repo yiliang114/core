@@ -113,6 +113,7 @@ export class ClientApp implements IClientApp, IDisposable {
       ...restOpts
     } = opts;
 
+    // 偏好设置
     this.initEarlyPreference(opts.workspaceDir || '');
     const defaultLanguage = getPreferenceLanguageId(defaultPreferences);
     setLanguageId(defaultLanguage);
@@ -122,6 +123,7 @@ export class ClientApp implements IClientApp, IDisposable {
     // The main-layout module instance should on the first
     this.browserModules = opts.modulesInstances || [];
     const isDesktop = opts.isElectronRenderer ?? isElectronRenderer();
+    // 初始化配置项
     this.config = {
       appName: DEFAULT_APPLICATION_NAME,
       appHost: isDesktop ? DEFAULT_APPLICATION_DESKTOP_HOST : DEFAULT_APPLICATION_WEB_HOST,
@@ -172,7 +174,9 @@ export class ClientApp implements IClientApp, IDisposable {
 
     this.connectionPath = connectionPath || `${this.config.wsPath}/service`;
     this.connectionProtocols = connectionProtocols;
+    // 初始化默认的 provider. 客户端 app, 配置 Service 等
     this.initBaseProvider();
+    // 初始化领域，command 全局注册器等
     this.initFields();
     this.appendIconStyleSheets(iconStyleSheets, useCdnIcon);
     this.createBrowserModules(defaultPreferences);

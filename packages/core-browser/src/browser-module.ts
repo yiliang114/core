@@ -6,6 +6,7 @@ import { AppConfig } from './react-providers/config-provider';
 export const IClientApp = Symbol('CLIENT_APP_TOKEN');
 
 export interface IClientApp {
+  // 初始化状态。 延期 ？
   appInitialized: Deferred<void>;
   browserModules: BrowserModule<any>[];
   injector: Injector;
@@ -14,7 +15,9 @@ export interface IClientApp {
   fireOnReload: (forcedReload?: boolean) => void;
 }
 
+// 核心浏览器模块。
 export abstract class BrowserModule<T = any> extends BasicModule {
+  // 自动注入
   @Autowired(IClientApp)
   protected app: IClientApp;
   public preferences?: (inject: Injector) => void;
